@@ -1,7 +1,7 @@
 function showweatherDetails(event) {
     event.preventDefault();
     const city = document.getElementById('city').value;
-    const apiKey = '2315da261f53278930dc1e32fbba877b'; // Replace 'YOUR_API_KEY' with your actual API key
+    const apiKey = 'xxxxxxxxxxxxxxxxxxxxxxxxx'; // Replace 'YOUR_API_KEY' with your actual API key
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
     fetch(apiUrl)
@@ -22,3 +22,27 @@ function showweatherDetails(event) {
 
 document.getElementById('weatherForm').addEventListener('submit',showweatherDetails );
 
+
+
+function showCurrentWeather(event){
+    event.preventDefault();
+    const apiKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    const lat = document.getElementById('lat').value;
+    const lon = document.getElementById('lon').value;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        const weatherInfo = document.getElementById('weatherInfo');
+        weatherInfo.innerHTML = `<h2>Weather in ${data.coord.lon}, ${data.coord.lat}</h2>
+                                <p>Temperature: ${data.main.temp} &#8451;</p>
+                                <p>Weather: ${data.weather[0].description}</p>`;
+    })
+    .catch(error => {
+          console.error('Error fetching weather:', error);
+          const weatherInfo = document.getElementById('weatherInfo');
+          weatherInfo.innerHTML = `<p>Failed to fetch weather. Please try again.</p>`;
+    });
+}
+
+document.getElementById('weatherLocation').addEventListener('submit',showCurrentWeather);
